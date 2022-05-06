@@ -59,7 +59,7 @@ If you're unfamiliar with Liquid, data can be referenced in a template with this
 
 ## Environment Variables
 ```
-EMAIL_SES_ALLOW_GUEST_SEND=false
+EMAIL_ALLOW_GUEST_SEND=false
 ```
 
 > Guest sending is intended for more convenient debugging with API clients, you should always set this to false when not debugging. 🚨

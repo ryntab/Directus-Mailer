@@ -9,7 +9,7 @@ An endpoint for sending emails with the Directus Nodemailer service.
   `npm run build`
 - Create a folder in your directus endpoints folder named `Mailer` or an alternate route name.
 - Move the `index.js` build file to your new folder  `directus/extensions/endpoints/Mailer/index.js`
-- Configure your email client in your .env file  [email config](https://docs.directus.io/configuration/config-options/#email).
+- Configure your email client in your .env file  [@email config](https://docs.directus.io/configuration/config-options/#email).
 - Start your Directus instance `npx directus start`
 
 ## Authentication

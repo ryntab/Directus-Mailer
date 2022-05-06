@@ -1,4 +1,3 @@
-
 # Directus Mailer 💬
 An endpoint for sending emails with the Directus Nodemailer service. 
 
@@ -18,7 +17,7 @@ Requests made by unauthenticated users will be rejected. Requests must be made w
 
 
 ## Sending Notifications
-An example `POST` request made to `https://directusAppDomain/SES{or custom path}/`
+An example `POST` request made to `https://directusAppDomain/Mailer{or custom path}/`
 In this example we are sending a test message to two recipients.
 ```JSON
 {
@@ -41,7 +40,7 @@ In this example we are sending a test message to two recipients.
 ```
 
 ## Liquid Templating 💧
-You can build custom email templates with Liquid.js and add them to your `extensions/templates` folder to reference them as templates in your POST request. [@email templating](https://docs.directus.io/extensions/email-templates/#_1-create-a-template-file)
+You can build custom email templates with Liquid.js and add them to your `extensions/templates` folder to reference them as templates in your `POST` request. [@email templating](https://docs.directus.io/extensions/email-templates/#_1-create-a-template-file)
 
 If you're unfamiliar with Liquid, data can be referenced in a template with this interpolation`{{title}}` [@data variables](https://liquidjs.com/tutorials/intro-to-liquid.html)
 ```JSON

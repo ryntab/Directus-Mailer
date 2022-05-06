@@ -2,6 +2,9 @@ export default (router, { services, exceptions, env }) => {
   const { MailService } = services;
 
   router.post("/", async (req, res, schema) => {
+
+    const { body } = req;
+    
     const mailService = new MailService({ schema });
 
     if (env.EMAIL_ALLOW_GUEST_SEND == null || !env.EMAIL_ALLOW_GUEST_SEND) {
@@ -15,10 +18,9 @@ export default (router, { services, exceptions, env }) => {
 
     if (req.body) {
       try {
-        const sendMail = await mailService.send(req.body);
-        console.log(sendMail);
+        const sendMail = await mailService.send(body);
         return res.send({
-          status: "success",
+          response: sendMail,
         });
       } catch (err) {
         return res.send({

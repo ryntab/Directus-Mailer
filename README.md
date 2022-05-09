@@ -18,28 +18,17 @@ Requests made by unauthenticated users will be rejected. Requests must be made w
 
 ## Sending Notifications
 An example `POST` request made to `https://directusAppDomain/Mailer{or custom path}/`
-In this example we are sending a test message to two recipients.
+In this example we are sending a test message to two recipients. 
 ```JSON
 {
   "subject": "How cool is Directus?",
   "to": ["email@gmail.com", "email@hotmail.com"],
   "template": {
     "name": "default-template",
-    "data": {
-        "name": "Rodger Waters",
-        "url": "http://localhost:3000/invite/12345"
-    },
-    "attachments": [
-        {
-            "name": "image.png",
-            "path": "./public/images/image.png"
-        }
-    ]
   }
 }
 ```
-
-## Liquid Templating 💧
+### Liquid Templating 💧
 You can build custom email templates with Liquid.js and add them to your `extensions/templates` folder to reference them as templates in your `POST` request. [@email templating](https://docs.directus.io/extensions/email-templates/#_1-create-a-template-file)
 
 If you're unfamiliar with Liquid, data can be referenced in a template with this interpolation`{{title}}` [@data variables](https://liquidjs.com/tutorials/intro-to-liquid.html)
@@ -54,6 +43,27 @@ If you're unfamiliar with Liquid, data can be referenced in a template with this
 		"subtitle": "Im a subtitle!",
 		"body": "Im the body!"
 	}
+}
+```
+### Attachments 📦
+To add attachments in your email notification, include an array of attachment objects. [@attachments](https://nodemailer.com/message/attachments/)
+```JSON
+{
+  "subject": "How cool is Directus?",
+  "to": "email@gmail.com",
+  "template": {
+    "name": "default-template",
+    "attachments": [
+        {
+            "name": "image.png",
+            "path": "./public/images/image.png"
+        },
+         {
+            "name": "image_2.png",
+            "path": "./public/images/image_2.png"
+        }
+    ]
+  }
 }
 ```
 

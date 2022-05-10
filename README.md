@@ -1,3 +1,5 @@
+![Tux, the Linux mascot](/assets/banner.png)
+
 # Directus Mailer 💬
 An endpoint for sending emails with the Directus Nodemailer service. 
 

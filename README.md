@@ -1,4 +1,5 @@
-![Tux, the Linux mascot](/assets/banner.png)
+
+![Directus Mailer](/assets/banner.png)
 
 # Directus Mailer 💬
 An endpoint for sending emails with the Directus Nodemailer service. 
@@ -64,6 +65,43 @@ To add attachments in your email notification, include an array of attachment ob
             "name": "image_2.png",
             "path": "./public/images/image_2.png"
         }
+    ]
+  }
+}
+```
+
+### Directus File Attachments
+You can also include Directus files as attachments with an array of reference IDs. If the current user has permissions to view the file, then it will be attached to the email notification.
+
+```JSON
+{
+  "subject": "How cool is Directus?",
+  "to": "email@gmail.com",
+  "template": {
+    "name": "default-template",
+    "files":  [
+	    "c17d967b-b257-414d-ab92-41ae6d0784ed",
+		"b507c26f-1333-4a8a-b8df-9731be74542e"
+	]
+  }
+}
+```
+You can include both attachments and Directus files in your email notification.
+```JSON
+{
+  "subject": "How cool is Directus?",
+  "to": "email@gmail.com",
+  "template": {
+    "name": "default-template",
+    "files":  [
+	"c17d967b-b257-414d-ab92-41ae6d0784ed",
+	"b507c26f-1333-4a8a-b8df-9731be74542e"
+     ],
+    "attachments": [
+       {
+        "filename": "text1.txt",
+        "content": "hello world!"
+       }
     ]
   }
 }

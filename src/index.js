@@ -1,32 +1,89 @@
-export default (router, { services, exceptions, env }) => {
-  const { MailService } = services;
+export default (router, { services, env }) => {
+
+  const { AssetsService, MailService } = services;
 
   router.post("/", async (req, res, schema) => {
 
-    const { body } = req;
-    
-    const mailService = new MailService({ schema });
+    const mailService = new MailService({
+      accountability: req.accountability,
+      schema: schema,
+    });
 
-    if (env.EMAIL_ALLOW_GUEST_SEND == null || !env.EMAIL_ALLOW_GUEST_SEND) {
-      if (req.accountability.user == null || req.accountability.role == null) {
+    const assetsService = new AssetsService({
+      accountability: req.accountability,
+      schema: req.schema,
+    });
+
+    const { body } = req;
+
+    let authorityCheck = () => {
+      if (env.EMAIL_ALLOW_GUEST_SEND == null || !env.EMAIL_ALLOW_GUEST_SEND) {
+        return (req.accountability.user == null || req.accountability.role == null) ? false : true;
+      } else {
+        return true;
+      }
+    };
+
+    let attachments = async (fileIDS) => {
+
+      let attachments = new Array();
+
+      let streamAttachments = new Array();
+
+      // Resolve all streams to an array
+      streamAttachments = await Promise.all(
+        fileIDS.map(function (id) {
+          return assetsService.getAsset(id, {});
+        })
+      );
+
+      // Create attachment objects from streams
+      streamAttachments.forEach((asset) => {
+        const { stream, file } = asset;
+        let attachment = new Object();
+        attachment.contentType = file.type;
+        attachment.filename = file.filename_download;
+        attachment.content = stream;
+        attachments.push(attachment);
+      });
+
+      //Return our array of formatted attachments
+      return attachments;
+    };
+
+    let create = async (body) => {
+      let mail = new Object();
+
+      mail.to = body.to;
+      mail.template = body.template;
+      mail.subject = body.subject;
+      mail.attachments = body.attachments;
+
+      if (mail.attachments == null) {
+        mail.attachments = new Array();
+      }
+
+      if (body.files != null || body.files.length > 0) {
+        let streams = await attachments(body.files);
+        mail.attachments = mail.attachments.concat(streams);
+      }
+
+      return mail;
+    }
+
+    let send = async (email) => {
+      if (authorityCheck()) {
+        await mailService.send(email).then(()=> {
+          res.send('sent');
+        });
+      } else {
         return res.status(400).send({
           message:
             "User not authorized, enable guest sending or include a token",
         });
       }
-    }
+    };
 
-    if (req.body) {
-      try {
-        const sendMail = await mailService.send(body);
-        return res.send({
-          response: sendMail,
-        });
-      } catch (err) {
-        return res.send({
-          status: err,
-        });
-      }
-    }
+    send(await create(body));
   });
 };

@@ -63,7 +63,7 @@ export default (router, { services, env }) => {
         mail.attachments = new Array();
       }
 
-      if (body.files != null || body.files.length > 0) {
+      if (body.files != null && body.files.length > 0) {
         let streams = await attachments(body.files);
         mail.attachments = mail.attachments.concat(streams);
       }

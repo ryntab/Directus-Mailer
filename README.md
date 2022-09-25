@@ -40,12 +40,14 @@ If you're unfamiliar with Liquid, data can be referenced in a template with this
   "from": "hello@ryntab.com",
   "to": "*********@gmail.com",
   "subject": "This email was made with Handlebars",
-	"template" : "alert",
-	"data" : {
-		"title": "Im a title!",
-		"subtitle": "Im a subtitle!",
-		"body": "Im the body!"
-	}
+	"template" : {
+              "name": "alert",
+	      "data" : {
+		      "title": "Im a title!",
+		      "subtitle": "Im a subtitle!",
+		      "body": "Im the body!"
+	      }
+        }
 }
 ```
 ### Attachments 📦

@@ -58,6 +58,7 @@ export default (router, { services, env }) => {
       mail.template = body.template;
       mail.subject = body.subject;
       mail.attachments = body.attachments;
+      mail.list = body.list;
 
       if (mail.attachments == null) {
         mail.attachments = new Array();

@@ -74,6 +74,7 @@ To add attachments in your email notification, include an array of attachment ob
 
 ### Directus File Attachments
 You can also include Directus files as attachments with an array of reference IDs. If the current user has permissions to view the file, then it will be attached to the email notification.
+> Note: Reference IDs that do not exist or do not meet the access requirements will be ignored.
 
 ```JSON
 {

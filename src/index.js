@@ -33,7 +33,7 @@ export default (router, { services, env }) => {
       // Resolve all streams to an array
       streamAttachments = await Promise.allSettled(
         fileIDS.map(function (id) {
-          return assetsService.getAsset(id, {});
+          return assetsService.getAsset(id, {transformationParams: {}});
         })
       );
 
